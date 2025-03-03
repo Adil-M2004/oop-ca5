@@ -1,0 +1,37 @@
+Basic Features (DAO Methods)
+Feature 1 – Get all Entities (assuming Player entities in this example)
+e.g. List<Player> getAllPlayers() - return a List of all the entities and display the
+returned list.
+
+
+Feature 2 – Find and Display (a single) Entity by Key
+e.g. Player getPlayerById(id ) – return a single entity (DTO) and display its
+contents.
+
+
+Feature 3 – Delete an Entity by key
+e.g. deletePlayerById(id) – remove specified entity from database
+
+
+Feature 4 – Insert an Entity
+(gather data, instantiate a Player object, pass into DAO method for insertion in
+DB) e.g. Player insertPlayer(Player p)
+
+
+return new entity (Player DTO) that includes the assigned auto-id.
+Feature 5 – Update an existing Entity by ID using supplied Player object
+e.g. updatePlayer(int id, Player p) – executes specified updates
+
+
+Feature 6 – Get list of entities matching a filter (based on DTO object)
+e.g. List<Player> findPlayersApplyFilter( playerAgeComparator )
+
+
+4. Create two methods (in a JsonConverter Class) that will convert data into JSON
+format:
+
+Feature 7 - Convert List of Entities to a JSON String
+e.g. String playersListToJsonString( List<Player> list )
+
+Feature 8 – Convert a single Entity by Key into a JSON String
+e.g. String playerToJsonString( Player p )
