@@ -108,7 +108,7 @@ public class Main {
 
 
             }
-            System.out.println("\nAll Cars displayed");
+            System.out.println("\nSpecified car displayed");
             System.out.println("\nFinished - Disconnected from database");
         } catch (SQLException ex) {
             System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
