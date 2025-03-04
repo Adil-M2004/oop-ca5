@@ -153,7 +153,7 @@ public class Main {
     }
 
     public static void feature5(int carID, Car car) {
-        System.out.println("Updating Car");
+        System.out.println("Updating Car.");
 
         String url = "jdbc:mysql://localhost/";
         String dbName = "ca5";
