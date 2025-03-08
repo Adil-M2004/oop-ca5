@@ -4,16 +4,16 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         Car myCar = new Car("Toyota", "Red", 2020);
 
         Main Main = new Main();
-        //Main.feature1();
-        //Main.feature2(2);
-        //Main.feature3(3);
-        Main.feature4(myCar);
-
+        Main.feature1();
+        Main.feature2(2);
+        Main.feature3(3);
+        Main.feature4("Ferrari","F8 Spyder",2020);
     }
 
     //TODO FEATURE 1
@@ -152,6 +152,39 @@ public class Main {
         }
     }
 
+    // Feature 4
+    public static void feature4(String carID,String model,int year)
+    {
+        String url = "jdbc:mysql://localhost/";
+        String dbName = "ca5";
+        String userName = "root";
+        String password = "";
+
+        String sqlInsert = "INSERT INTO cars (make, model, modelYear) VALUES ('" + carID + "', '" + model + "', " + year + ")";
+
+        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password);
+             Statement statement = conn.createStatement())
+        {
+            System.out.println("\nConnected to the database.");
+
+            int rowsInserted = statement.executeUpdate(sqlInsert);
+
+            if (rowsInserted > 0) {
+                System.out.println("Car added successfully: " + carID + " " + model + " "   + year + " ");
+            } else {
+                System.out.println("Failed to add car: " + carID + " " + model + " " + year + " ");
+            }
+
+            System.out.println("\nFinished - Disconnected from database");
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
+    }
+
     public static void feature5(int carID, Car car) {
         System.out.println("Updating Car.");
 
@@ -222,24 +255,24 @@ public class Main {
         }
     }
 
-     while (resultSet.next()) {
-        // Columns can be identified by column name OR by number
-        // The first column is number 1   e.g. resultSet.getString(1);
-
-        int car_ID = resultSet.getInt(1);
-
-
-        String make = resultSet.getString(2);
-
-        String model = resultSet.getString(3);  // get third value using index, i.e lastName
-        int modelyear = resultSet.getInt(4);
-
-        System.out.print("Income ID = " + car_ID + ", ");
-        System.out.print("Title = " + make + ", ");
-        System.out.print("Amount = " + model + ", ");
-        System.out.println("Date Earned : " + modelyear);
-
-
+//     while (resultSet.next()) {
+//        // Columns can be identified by column name OR by number
+//        // The first column is number 1   e.g. resultSet.getString(1);
+//
+//        int car_ID = resultSet.getInt(1);
+//
+//
+//        String make = resultSet.getString(2);
+//
+//        String model = resultSet.getString(3);  // get third value using index, i.e lastName
+//        int modelyear = resultSet.getInt(4);
+//
+//        System.out.print("Income ID = " + car_ID + ", ");
+//        System.out.print("Title = " + make + ", ");
+//        System.out.print("Amount = " + model + ", ");
+//        System.out.println("Date Earned : " + modelyear);
+//
+//
 
 
 
