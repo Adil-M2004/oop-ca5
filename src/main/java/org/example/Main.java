@@ -1,19 +1,82 @@
 package org.example;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-
-        Car myCar = new Car("Toyota", "Red", 2020);
-
+    public static void main(String[] args)
+    {
         Main Main = new Main();
-        //Main.feature1();
-        //Main.feature2(2);
-        //Main.feature3(3);
-        Main.feature4(myCar);
+       // Car myCar = new Car("Toyota", "Red", 2020, 21000);
 
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Input Feature Option (Milstone 1: 1-6)\n " +
+                "1 – Get all Entities\n" +
+                "2 - Find and display car by key\n"+
+                        "3 – Delete an Entity by key\n" +
+                        "4 - Insert an Entity\n"+
+                        "5 – Update an existing Entity by ID\n" +
+                        "6 - Get list of entities matching a filter"
+                );
+        int option = keyboard.nextInt();
+
+
+            if(option==1) {
+                Main.feature1();
+                menu();
+                } else if(option==2) {
+                    Main.feature2(2);
+                menu();
+                } else if(option==3) {
+                    Main.feature3(3);
+                menu();
+                } else if(option==4) {
+                    Main.feature4("Ferrari","F8 Spyder",2020, 315000);
+                menu();
+                } else if(option==5) {
+                    Main.feature5(4, 45000);
+                menu();
+                } else if(option==6) {
+                    Main.feature6(2020);
+                menu();
+                }
+
+
+
+        //Main.feature1();
+       // Main.feature2(2);
+//        Main.feature3(3);
+//        Main.feature4("Ferrari","F8 Spyder",2020, 315000);
+       //   Main.feature5(3, 14000);
+       // Main.feature6(2020);
+    }
+
+    public static void menu() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Input Feature Option (Milstone 1: 1-6)\n " +
+                "1 – Get all Entities\n" +
+                "2 - Find and display car by key\n"+
+                "3 – Delete an Entity by key\n" +
+                "4 - Insert an Entity\n"+
+                "5 – Update an existing Entity by ID\n" +
+                "6 - Get list of entities matching a filter"
+        );
+        int option = keyboard.nextInt();
+
+        if(option==1) {
+            Main.feature1();
+        } else if(option==2) {
+            Main.feature2(2);
+        } else if(option==3) {
+            Main.feature3(3);
+        } else if(option==4) {
+            Main.feature4("Ferrari","F8 Spyder",2020, 315000);
+        } else if(option==5) {
+            Main.feature5(4, 45000);
+        } else if(option==6) {
+            Main.feature6(2020);
+        }
     }
 
     //TODO FEATURE 1
@@ -38,10 +101,14 @@ public class Main {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
 
+//            ArrayList<String> carslist = new ArrayList<String>();
+
             // Iterate over the resultSet to process every row
             while (resultSet.next()) {
                 // Columns can be identified by column name OR by number
                 // The first column is number 1   e.g. resultSet.getString(1);
+
+//                Car car = new Car();
 
                 int car_ID = resultSet.getInt(1);
 
@@ -51,10 +118,14 @@ public class Main {
                 String model = resultSet.getString(3);  // get third value using index, i.e lastName
                 int modelyear = resultSet.getInt(4);
 
-                System.out.print("Income ID = " + car_ID + ", ");
-                System.out.print("Title = " + make + ", ");
-                System.out.print("Amount = " + model + ", ");
-                System.out.println("Date Earned : " + modelyear);
+                int price = resultSet.getInt(5);
+
+
+                System.out.print("Car ID = " + car_ID + ", ");
+                System.out.print("Make = " + make + ", ");
+                System.out.print("Model = " + model + ", ");
+                System.out.println("Model Year : " + modelyear);
+                System.out.println("Price: " + price);
 
 
             }
@@ -91,7 +162,6 @@ public class Main {
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
 
-            double incomeAmount = 0;
             // Iterate over the resultSet to process every row
             while (resultSet.next()) {
                 // Columns can be identified by column name OR by number
@@ -105,12 +175,14 @@ public class Main {
                 String model = resultSet.getString(3);  // get third value using index, i.e lastName
                 int modelyear = resultSet.getInt(4);
 
-                System.out.print("Income ID = " + car_ID + ", ");
-                System.out.print("Title = " + make + ", ");
-                System.out.print("Amount = " + model + ", ");
-                System.out.println("Date Earned : " + modelyear);
+                int price = resultSet.getInt(5);
 
 
+                System.out.print("Car ID = " + car_ID + ", ");
+                System.out.print("Make = " + make + ", ");
+                System.out.print("Model = " + model + ", ");
+                System.out.println("Model Year : " + modelyear);
+                System.out.println("Price: " + price);
             }
             System.out.println("\nSpecified car displayed");
             System.out.println("\nFinished - Disconnected from database");
@@ -152,50 +224,100 @@ public class Main {
         }
     }
 
-    public static void feature5(int carID, Car car) {
-        System.out.println("Updating Car.");
-
+    // Feature 4
+    public static void feature4(String carID,String model,int year, int price)
+    {
         String url = "jdbc:mysql://localhost/";
         String dbName = "ca5";
-        String fullURL = url + dbName;  // join together
         String userName = "root";
         String password = "";
 
-        String make1 = car.make;
-        String model1 = car.model;
-        int modelyear1 = car.modelyear;
+        String sqlInsert = "INSERT INTO cars (make, model, modelYear, price) VALUES ('" + carID + "', '" + model + "', " + year + "', " + price +")";
 
-
-        // Prepare the Query String using "?" to indicate field parameters.
-        ///
-        String query1 = "INSERT INTO cars VALUES (null, ?, ?, ?)";
-
-
-        // Try-with-Resources style
-        try (Connection connection = DriverManager.getConnection(fullURL, userName, password);
-             PreparedStatement preparedStatement1 = connection.prepareStatement( query1 );
-        )
+        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password);
+             Statement statement = conn.createStatement())
         {
-            System.out.println("Connected to the database");
-            System.out.println("Building a PreparedStatement to insert a new row in database.");
+            System.out.println("\nConnected to the database.");
+
+            int rowsInserted = statement.executeUpdate(sqlInsert);
+
+            if (rowsInserted > 0) {
+                System.out.println("Car added successfully: " + carID + " " + model + " "   + year + " " + price + " ");
+            } else {
+                System.out.println("Failed to add car: " + carID + " " + model + " " + year + " " + price+ " ");
+            }
+
+            System.out.println("\nFinished - Disconnected from database");
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
+    }
+
+    //TODO FEUATURE5 *******************************************************************************
+    public static void feature5(int carID, int price) {
+
+    String url = "jdbc:mysql://localhost/";
+    String dbName = "ca5";
+    String userName = "root";
+    String password = "";
+
+    String update = "UPDATE cars\n" +
+            "SET price = " + price + " WHERE car_ID =" + carID;
+
+    try (Connection conn = DriverManager.getConnection(url + dbName, userName, password);
+    Statement statement = conn.createStatement())
+    {
+        System.out.println("\nConnected to the database.");
+
+        int rowsInserted = statement.executeUpdate(update);
+
+        if (rowsInserted > 0) {
+            System.out.println("Car Price updates successfully with ID: " + carID + " NEW PRICE: " + price + " ");
+        } else {
+            System.out.println("Failed to add car: " + carID + " " + price + " ");
+        }
 
 
-            preparedStatement1.setString(1, make1);
-            preparedStatement1.setString(2, model1);
-            preparedStatement1.setDouble(3, modelyear1);
+        System.out.println("\nFinished - Disconnected from database");
+
+    }
+    catch (SQLException ex)
+    {
+        System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
+        ex.printStackTrace();
+    }
+}
+
+    //TODO FEATURE 2
+    public static void feature6(int filteryear) {
+        System.out.println("Feature 6- Filter cars by Year (Cars Before seleced Year)");
+
+        String url = "jdbc:mysql://localhost/";
+        String dbName = "ca5";
+        String userName = "root";
+        String password = "";
+
+//        Scanner keyboard = new Scanner(System.in);
+//        System.out.println("Enter Car ID");
+//        int carID = keyboard.nextInt();
+
+        // try with resources
+        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password)) {
+            System.out.println("\nConnected to the database.");
 
 
-            preparedStatement1.executeUpdate();  // will INSERT a new row
+            Statement statement = conn.createStatement();
+
+            // ResultSet stores the result from the SQL query
+            String sqlQuery = "select * from cars WHERE modelyear <= " + filteryear;
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
 
 
-
-            // Statements allow us to issue SQL queries to the database
-            Statement statement = connection.createStatement();
-
-            // Execute the Prepared Statement and get a result set
-            ResultSet resultSet = statement.executeQuery("select * from cars");
-
-
+            // Iterate over the resultSet to process every row
             while (resultSet.next()) {
                 // Columns can be identified by column name OR by number
                 // The first column is number 1   e.g. resultSet.getString(1);
@@ -208,40 +330,47 @@ public class Main {
                 String model = resultSet.getString(3);  // get third value using index, i.e lastName
                 int modelyear = resultSet.getInt(4);
 
-                System.out.print("Income ID = " + car_ID + ", ");
-                System.out.print("Title = " + make + ", ");
-                System.out.print("Amount = " + model + ", ");
-                System.out.println("Date Earned : " + modelyear);
+                int price = resultSet.getInt(5);
+
+
+                System.out.print("Car ID = " + car_ID + ", ");
+                System.out.print("Make = " + make + ", ");
+                System.out.print("Model = " + model + ", ");
+                System.out.println("Model Year : " + modelyear);
+                System.out.println("Price: " + price);
 
 
             }
-            System.out.println("Car Added");
+            System.out.println("\nSpecified Max model year cars displayed");
+            System.out.println("\nFinished - Disconnected from database");
         } catch (SQLException ex) {
-            System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
+            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
             ex.printStackTrace();
         }
     }
 
-     while (resultSet.next()) {
-        // Columns can be identified by column name OR by number
-        // The first column is number 1   e.g. resultSet.getString(1);
-
-        int car_ID = resultSet.getInt(1);
 
 
-        String make = resultSet.getString(2);
+//     while (resultSet.next()) {
+//        // Columns can be identified by column name OR by number
+//        // The first column is number 1   e.g. resultSet.getString(1);
+//
+//        int car_ID = resultSet.getInt(1);
+//
+//
+//        String make = resultSet.getString(2);
+//
+//        String model = resultSet.getString(3);  // get third value using index, i.e lastName
+//        int modelyear = resultSet.getInt(4);
+//
+//        System.out.print("Income ID = " + car_ID + ", ");
+//        System.out.print("Title = " + make + ", ");
+//        System.out.print("Amount = " + model + ", ");
+//        System.out.println("Date Earned : " + modelyear);
+//
+//
 
-        String model = resultSet.getString(3);  // get third value using index, i.e lastName
-        int modelyear = resultSet.getInt(4);
-
-        System.out.print("Income ID = " + car_ID + ", ");
-        System.out.print("Title = " + make + ", ");
-        System.out.print("Amount = " + model + ", ");
-        System.out.println("Date Earned : " + modelyear);
 
 
 
-
-
-
-    }//LB
+}//LB
