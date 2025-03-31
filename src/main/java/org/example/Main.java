@@ -20,7 +20,10 @@ public class Main {
                         "4 - Insert an Entity\n"+
                         "5 – Update an existing Entity by ID\n" +
                         "6 - Get list of entities matching a filter\n"+
-                        "7 - Convert List of Entities to a JSON String"
+                        "7 - Convert List of Entities to a JSON String\n"+
+                        "8 -  Convert a single Entity by Key into a JSON String\n"+
+                        "9 - Display Entity by Id\n"+
+                        "10 - Display all Entities"
                 );
         int option = keyboard.nextInt();
 
@@ -51,7 +54,14 @@ public class Main {
                 } else if(option==7) { //MILSTONE 2 START
                     Main.feature7();
                     menu();
-               }
+               } else if(option==8) {
+                System.out.println("Enter Car Id:");
+                int carId = keyboard.nextInt();
+                    Main.feature8(carId);
+                    menu();
+            } else if(option==9) {
+
+            }
 
 
 
@@ -237,7 +247,7 @@ public class Main {
         }
     }
 
-    // Feature 4
+    //TODO Feature 4
     public static void feature4(String carID,String model,int year, int price)
     {
         System.out.println("Insert an Entity");
@@ -271,7 +281,7 @@ public class Main {
         }
     }
 
-    //TODO FEUATURE5 *******************************************************************************
+    //TODO FEUATURE 5
     public static void feature5(int carID, int price) {
 
         System.out.println("Feature 5 – Update an existing Entity by ID using supplied Player object ");
@@ -364,6 +374,7 @@ public class Main {
         }
     }
 
+    //TODO FEATURE 7
     public static void feature7() {
         System.out.println("Feature 7 - Convert List of Entities to a JSON String ");
 
@@ -418,13 +429,6 @@ public class Main {
                 System.out.println("JSON String is: \n " + jsonString);
 
 
-//                System.out.print("Car ID = " + car_ID + ", ");
-//                System.out.print("Make = " + make + ", ");
-//                System.out.print("Model = " + model + ", ");
-//                System.out.println("Model Year : " + modelyear);
-//                System.out.println("Price: " + price);
-
-
             }
             System.out.println("\n*********All Cars displayed in JSON FORMAT******");
             System.out.println("\nFinished - Disconnected from database");
@@ -436,26 +440,72 @@ public class Main {
 
     }
 
+    //TODO FEATURE 8
+    public static void feature8(int carid) {
+        System.out.println("Feature 8 – Convert a single Entity by Key into a JSON String ");
+
+        String url = "jdbc:mysql://localhost/";
+        String dbName = "ca5";
+        String userName = "root";
+        String password = "";
 
 
-//     while (resultSet.next()) {
-//        // Columns can be identified by column name OR by number
-//        // The first column is number 1   e.g. resultSet.getString(1);
-//
-//        int car_ID = resultSet.getInt(1);
-//
-//
-//        String make = resultSet.getString(2);
-//
-//        String model = resultSet.getString(3);  // get third value using index, i.e lastName
-//        int modelyear = resultSet.getInt(4);
-//
-//        System.out.print("Income ID = " + car_ID + ", ");
-//        System.out.print("Title = " + make + ", ");
-//        System.out.print("Amount = " + model + ", ");
-//        System.out.println("Date Earned : " + modelyear);
-//
-//
+        // try with resources
+        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password)) {
+            System.out.println("\nConnected to the database.");
+
+
+            Statement statement = conn.createStatement();
+
+            // ResultSet stores the result from the SQL query
+            String sqlQuery = "select * from cars WHERE car_ID = "+carid;
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+
+//            ArrayList<String> carslist = new ArrayList<String>();
+
+            // Iterate over the resultSet to process every row
+            while (resultSet.next()) {
+                // Columns can be identified by column name OR by number
+                // The first column is number 1   e.g. resultSet.getString(1);
+
+
+                int car_ID = resultSet.getInt(1);
+
+                String make = resultSet.getString(2);
+
+                String model = resultSet.getString(3);  // get third value using index, i.e lastName
+                int modelyear = resultSet.getInt(4);
+
+                int price = resultSet.getInt(5);
+
+                //Create the JSON OBJECT
+                JSONObject jsonObject = new JSONObject();
+
+                // Adding key=>value pairs.  Keys must be strings, but values can have various types.
+                jsonObject.put("Car ID", car_ID);
+                jsonObject.put("Make", make);
+                jsonObject.put("Model", model);
+                jsonObject.put("Model Year", modelyear);
+                jsonObject.put("Price", price);
+
+                String jsonString = jsonObject.toString();
+
+                System.out.println("JSON String is: \n " + jsonString);
+
+
+            }
+            System.out.println("\n*********Selected Car displayed in JSON FORMAT*********");
+            System.out.println("\nFinished - Disconnected from database");
+        } catch (SQLException ex) {
+            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
+
+
+
+    }
+
 
 
 
