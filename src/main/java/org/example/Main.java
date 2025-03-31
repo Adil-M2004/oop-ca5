@@ -19,7 +19,8 @@ public class Main {
                         "3 – Delete an Entity by key\n" +
                         "4 - Insert an Entity\n"+
                         "5 – Update an existing Entity by ID\n" +
-                        "6 - Get list of entities matching a filter"
+                        "6 - Get list of entities matching a filter\n"+
+                        "7 - Convert List of Entities to a JSON String"
                 );
         int option = keyboard.nextInt();
 
@@ -46,8 +47,11 @@ public class Main {
                 menu();
                 } else if(option==6) {
                     Main.feature6(2020);
-                menu();
-                }
+                    menu();            //MILESTONE 1 END
+                } else if(option==7) { //MILSTONE 2 START
+                    Main.feature7();
+                    menu();
+               }
 
 
 
@@ -83,6 +87,8 @@ public class Main {
             Main.feature5(4, 45000);
         } else if(option==6) {
             Main.feature6(2020);
+        } else if(option==7) {
+            Main.feature7();
         }
     }
 
@@ -359,8 +365,6 @@ public class Main {
     }
 
     public static void feature7() {
-
-
         System.out.println("Feature 7 - Convert List of Entities to a JSON String ");
 
         String url = "jdbc:mysql://localhost/";
@@ -414,15 +418,15 @@ public class Main {
                 System.out.println("JSON String is: \n " + jsonString);
 
 
-                System.out.print("Car ID = " + car_ID + ", ");
-                System.out.print("Make = " + make + ", ");
-                System.out.print("Model = " + model + ", ");
-                System.out.println("Model Year : " + modelyear);
-                System.out.println("Price: " + price);
+//                System.out.print("Car ID = " + car_ID + ", ");
+//                System.out.print("Make = " + make + ", ");
+//                System.out.print("Model = " + model + ", ");
+//                System.out.println("Model Year : " + modelyear);
+//                System.out.println("Price: " + price);
 
 
             }
-            System.out.println("\nAll Cars displayed");
+            System.out.println("\n*********All Cars displayed in JSON FORMAT******");
             System.out.println("\nFinished - Disconnected from database");
         } catch (SQLException ex) {
             System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
