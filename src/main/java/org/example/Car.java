@@ -8,16 +8,19 @@ public class Car {
     int modelyear;
     int price;
 
-    // Constructor (used to initialize objects)
-    public Car(String brand, String color, int year, int price) {
-        this.make = brand;
-        this.model = color;
-        this.modelyear = year;
-        this.price = price;
-    }
 
     //empty constuctor
     public Car() {
+
+    }
+//CONSTUCTOR
+    public Car(int carId, String make, String model, int modelyear, int price) {
+        this.id = carId;
+        this.make = make;
+        this.model = model;
+        this.modelyear = modelyear;
+        this.price = price;
+
 
     }
 
