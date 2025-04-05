@@ -1,18 +1,10 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.json.JSONObject;
-
-import static org.example.jsonConverterClass.jsonconverter;//IMPORTED FROM JSONCONVERTERCLAS
 
 public class Main {
     public static void main(String[] args)
@@ -68,10 +60,6 @@ public class Main {
                     Main.feature8(carId);
                     menu();
             } else if(option==9) {
-                System.out.println("Enter Car ID:");
-                int carId = keyboard.nextInt();
-                Main.feature9(carId);
-                menu();
 
             }
 
@@ -491,21 +479,19 @@ public class Main {
 
                 int price = resultSet.getInt(5);
 
-                jsonconverter(car_ID, make, model, modelyear, price);
+                //Create the JSON OBJECT
+                JSONObject jsonObject = new JSONObject();
 
-//                //Create the JSON OBJECT
-//                JSONObject jsonObject = new JSONObject();
-//
-//                // Adding key=>value pairs.  Keys must be strings, but values can have various types.
-//                jsonObject.put("Car ID", car_ID);
-//                jsonObject.put("Make", make);
-//                jsonObject.put("Model", model);
-//                jsonObject.put("Model Year", modelyear);
-//                jsonObject.put("Price", price);
-//
-//                String jsonString = jsonObject.toString();
-//
-//                System.out.println("JSON String is: \n " + jsonString);
+                // Adding key=>value pairs.  Keys must be strings, but values can have various types.
+                jsonObject.put("Car ID", car_ID);
+                jsonObject.put("Make", make);
+                jsonObject.put("Model", model);
+                jsonObject.put("Model Year", modelyear);
+                jsonObject.put("Price", price);
+
+                String jsonString = jsonObject.toString();
+
+                System.out.println("JSON String is: \n " + jsonString);
 
 
             }
@@ -519,70 +505,6 @@ public class Main {
 
 
     }
-
-    // Feature 9 - Display Entity by ID
-    public static void feature9(int carId) {
-        try (Socket socket = new Socket("localhost", 12345);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            // Send the command and ID to the server
-            out.println("DISPLAY_BY_ID " + carId);
-
-            // Read the JSON response from the server
-            String jsonResponse = in.readLine();
-            JSONObject car = new JSONObject(jsonResponse);
-
-            // Display car details
-            System.out.println("Car ID = " + car.getInt("car_ID"));
-            System.out.println("Make = " + car.getString("make"));
-            System.out.println("Model = " + car.getString("model"));
-            System.out.println("Model Year = " + car.getInt("modelyear"));
-            System.out.println("Price = " + car.getInt("price"));
-
-        } catch (IOException e) {
-            System.out.println("Error connecting to the server.");
-            e.printStackTrace();
-        }
-    }
-    public void handleDisplayById(String command) {
-        String[] parts = command.split(" ");
-        int carId = Integer.parseInt(parts[1]);
-
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "ca5";
-        String userName = "root";
-        String password = "";
-
-        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password);
-             Statement statement = conn.createStatement()) {
-
-            System.out.println("Connected to the database.");
-
-            String sqlQuery = "SELECT * FROM cars WHERE car_ID = " + carId;
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-            if (resultSet.next()) {
-                // Create a JSON object to hold car details
-                JSONObject car = new JSONObject();
-                car.put("car_ID", resultSet.getInt("car_ID"));
-                car.put("make", resultSet.getString("make"));
-                car.put("model", resultSet.getString("model"));
-                car.put("modelyear", resultSet.getInt("modelyear"));
-                car.put("price", resultSet.getInt("price"));
-
-                // Send the JSON object as a string to the client
-                System.out.println(car.toString());
-            } else {
-                System.out.println("Car not found");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
-            ex.printStackTrace();
-        }
-    }
-
 
 
 
