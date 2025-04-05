@@ -1,5 +1,10 @@
 package org.example;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +38,7 @@ public class Main {
                 menu();
                 } else if(option==2) {
                     Main.feature2(2);
-                menu();
+                menu();//aa
                 } else if(option==3) {
                     Main.feature3(3);
                 menu();
@@ -60,6 +65,10 @@ public class Main {
                     Main.feature8(carId);
                     menu();
             } else if(option==9) {
+                System.out.println("Enter Car ID:");
+                int carId = keyboard.nextInt();
+                Main.feature9(carId);
+
 
             }
 
@@ -505,6 +514,71 @@ public class Main {
 
 
     }
+
+    // Feature 9 - Display Entity by ID
+    public static void feature9(int carId) {
+        try (Socket socket = new Socket("localhost", 12345);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            // Send the command and ID to the server
+            out.println("DISPLAY_BY_ID " + carId);
+
+            // Read the JSON response from the server
+            String jsonResponse = in.readLine();
+            JSONObject car = new JSONObject(jsonResponse);
+
+            // Display car details
+            System.out.println("Car ID = " + car.getInt("car_ID"));
+            System.out.println("Make = " + car.getString("make"));
+            System.out.println("Model = " + car.getString("model"));
+            System.out.println("Model Year = " + car.getInt("modelyear"));
+            System.out.println("Price = " + car.getInt("price"));
+
+        } catch (IOException e) {
+            System.out.println("Error connecting to the server.");
+            e.printStackTrace();
+        }
+    }
+    public void handleDisplayById(String command) {
+        String[] parts = command.split(" ");
+        int carId = Integer.parseInt(parts[1]);
+
+        String url = "jdbc:mysql://localhost/";
+        String dbName = "ca5";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url + dbName, userName, password);
+             Statement statement = conn.createStatement()) {
+
+            System.out.println("Connected to the database.");
+
+            String sqlQuery = "SELECT * FROM cars WHERE car_ID = " + carId;
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            if (resultSet.next()) {
+                // Create a JSON object to hold car details
+                JSONObject car = new JSONObject();
+                car.put("car_ID", resultSet.getInt("car_ID"));
+                car.put("make", resultSet.getString("make"));
+                car.put("model", resultSet.getString("model"));
+                car.put("modelyear", resultSet.getInt("modelyear"));
+                car.put("price", resultSet.getInt("price"));
+
+                // Send the JSON object as a string to the client
+                System.out.println(car.toString());
+            } else {
+                System.out.println("Car not found");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQL Failed - check MySQL Server is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
+    }
+
+
 
 
 
