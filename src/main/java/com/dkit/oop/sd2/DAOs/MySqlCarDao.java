@@ -216,5 +216,108 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
         return rowsInserted;
     }
 
+    //TODO Feature 5
+
+    @Override
+    public int UpdateCar(int id, int price) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int rowsInserted = 0;
+
+        try {
+
+            connection = this.getConnection();
+            String query = "UPDATE cars\n" +
+                    "SET price = " + price + " WHERE car_ID =" + id;
+            preparedStatement = connection.prepareStatement(query);
+            // preparedStatement.setInt(1, id);
+
+
+            Statement statement = connection.createStatement(); {
+
+                System.out.println("\nConnected to the database.");
+
+                // Execute the delete statement
+                rowsInserted = statement.executeUpdate(query);
+
+                if (rowsInserted > 0) {
+                    System.out.println("Car Price updates successfully with ID: " + id + " NEW PRICE: " + price + " ");
+                } else {
+                    System.out.println("Failed to add car: " + price + " " + price + " ");
+                }
+
+
+                System.out.println("\nFinished - Disconnected from database");
+
+            }
+        } catch (SQLException e) {
+            throw new DaoException("findAllCaresultSet() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("InsertCar() " + e.getMessage());
+            }
+        }
+        return rowsInserted;
+    }
+
+    @Override
+    public List<Car> filterYear(int year) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Car> carsList = new ArrayList<>();
+
+        try {
+            //Get connection object using the getConnection() method inherited
+            // from the super class (MySqlDao.java)
+            connection = this.getConnection();
+
+            String query = "select * from cars WHERE modelyear <= " + year;
+            preparedStatement = connection.prepareStatement(query);
+
+            //Using a PreparedStatement to execute SQL...
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int Id = resultSet.getInt(1);
+                String make = resultSet.getString(2);
+                String model = resultSet.getString(3);
+                int year1 = resultSet.getInt(4);
+                int price = resultSet.getInt(5);
+                Car c = new Car(Id, make, model, year1, price);
+                carsList.add(c);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("findAllCaresultSet() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findAllUsers() " + e.getMessage());
+            }
+        }
+        return carsList;     // may be empty
+    }
+
+
 
 }//LB

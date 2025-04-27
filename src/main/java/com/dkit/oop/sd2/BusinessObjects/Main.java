@@ -61,14 +61,14 @@ public class Main {
         } else if (option == 4) {
             Car car = new Car(9,"Ferrari", "458 Italia", 2016, 26000);
            Main.feature4(car);
-//            menu();
-//        } else if (option == 5) {
-//            //Main.feature5(4, 45000);
-//            System.out.println("Input ID");
-//            int id = keyboard.nextInt();
-//            System.out.println("Input New Price");
-//            int price = keyboard.nextInt();
-//            Main.feature5(id, price);
+       //     menu();
+        } else if (option == 5) {
+            //Main.feature5(4, 45000);
+            System.out.println("Input ID");
+            int id = keyboard.nextInt();
+            System.out.println("Input New Price");
+            int price = keyboard.nextInt();
+            Main.feature5(id, price);
 //            menu();
 //        } else if (option == 6) {
 //            Main.feature6(2020);
@@ -221,6 +221,31 @@ public class Main {
 
         } catch (DaoException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void feature5(int id, int price) {
+        CarDaoInterface ICarDao = new MySqlCarDao();
+
+        try {
+            System.out.println("\nCall UpdateCar()");
+            int car1 = ICarDao.UpdateCar(id, price);
+
+            System.out.println(car1);
+
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void feature6(int year) {
+        CarDaoInterface ICarDao = new MySqlCarDao();
+
+        try {
+            System.out.println("\nCall Filteryear");
+            List<Car> cars = ICarDao.filterYear(year);
+
+            System.out.println();
         }
     }
 
