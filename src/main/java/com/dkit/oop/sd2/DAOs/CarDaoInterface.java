@@ -38,5 +38,9 @@ public interface CarDaoInterface
     int UpdateCar(int id, int price) throws DaoException;
 
     public List<Car> filterYear(int year) throws DaoException;
+
+    public List<Car> Jsonstring() throws DaoException;
+
+
 }
 

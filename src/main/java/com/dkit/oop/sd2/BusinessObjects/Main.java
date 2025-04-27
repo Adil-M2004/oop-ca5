@@ -257,7 +257,7 @@ public class Main {
 
         try {
             System.out.println("\n CallEntitiesToJson");
-            List<Car> cars = ICarDao.
+            List<Car> cars = ICarDao.Jsonstring();
 
             System.out.println(cars);
 
