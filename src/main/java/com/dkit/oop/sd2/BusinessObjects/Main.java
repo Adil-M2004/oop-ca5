@@ -73,8 +73,8 @@ public class Main {
         } else if (option == 6) {
             Main.feature6(2020);
 //            menu();            //MILESTONE 1 END
-//        } else if (option == 7) { //MILSTONE 2 START
-//            Main.feature7();
+        } else if (option == 7) { //MILSTONE 2 START
+            Main.feature7();
 //            menu();
 //        } else if (option == 8) {
 //            System.out.println("Enter Car Id:");
