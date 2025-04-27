@@ -70,8 +70,8 @@ public class Main {
             int price = keyboard.nextInt();
             Main.feature5(id, price);
 //            menu();
-//        } else if (option == 6) {
-//            Main.feature6(2020);
+        } else if (option == 6) {
+            Main.feature6(2020);
 //            menu();            //MILESTONE 1 END
 //        } else if (option == 7) { //MILSTONE 2 START
 //            Main.feature7();
@@ -245,7 +245,11 @@ public class Main {
             System.out.println("\nCall Filteryear");
             List<Car> cars = ICarDao.filterYear(year);
 
-            System.out.println();
+            System.out.println(cars);
+
+
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
     }
 
