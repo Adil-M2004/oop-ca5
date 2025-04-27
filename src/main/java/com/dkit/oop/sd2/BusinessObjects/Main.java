@@ -252,6 +252,7 @@ public class Main {
             e.printStackTrace();
         }
     }
+    
     public static void feature7() {
         CarDaoInterface ICarDao = new MySqlCarDao();
 
