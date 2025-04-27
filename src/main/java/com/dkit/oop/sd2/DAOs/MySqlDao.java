@@ -11,9 +11,12 @@ package com.dkit.oop.sd2.DAOs;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
+
+import com.dkit.oop.sd2.DTOs.Car;
 import com.dkit.oop.sd2.Exceptions.DaoException;
 
-public class MySqlDao
+public abstract class MySqlDao
 {
     public Connection getConnection() throws DaoException
     {
@@ -57,4 +60,6 @@ public class MySqlDao
             System.exit(1);
         }
     }
+
+    public abstract List<Car> JsonString()throws DaoException;
 }

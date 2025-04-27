@@ -252,5 +252,18 @@ public class Main {
             e.printStackTrace();
         }
     }
+    public static void feature7() {
+        CarDaoInterface ICarDao = new MySqlCarDao();
+
+        try {
+            System.out.println("\n CallEntitiesToJson");
+            List<Car> cars = ICarDao.
+
+            System.out.println(cars);
+
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
 }//LB
