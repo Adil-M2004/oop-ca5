@@ -76,10 +76,10 @@ public class Main {
         } else if (option == 7) { //MILSTONE 2 START
             Main.feature7();
 //            menu();
-//        } else if (option == 8) {
-//            System.out.println("Enter Car Id:");
-//            int carId = keyboard.nextInt();
-//            Main.feature8(carId);
+        } else if (option == 8) {
+            System.out.println("Enter Car Id:");
+            int carId = keyboard.nextInt();
+            Main.feature8(carId);
 //            menu();
 //        } else if (option == 9) {
 //            System.out.println("Enter Car ID:");
