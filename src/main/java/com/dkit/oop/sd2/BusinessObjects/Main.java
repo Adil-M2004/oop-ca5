@@ -142,29 +142,7 @@ public class Main {
                     System.out.println("Car: " + car.toString());
             }
 
-            // test dao with a username and password that we know are present in the database
-            // (Use phpMyAdmin to check that the database has a row with this data)
-//            System.out.println("\nCall: findUserByUsernamePassword()");
-//            String username = "smithj";
-//            String password = "password";
 
-//            Car car = IUserDao.findUserByUsernamePassword(username, password);
-//
-//            if( user != null ) // null returned if userid and password not valid
-//                System.out.println("User found: " + user);
-//            else
-//                System.out.println("Username with that password not found");
-//
-//            // test dao - with an invalid username (i.e. row not in database)
-//            username = "madmax";
-//            password = "thunderdome";
-//
-//            user = IUserDao.findUserByUsernamePassword(username, password);
-//
-//            if(user != null)
-//                System.out.println("Username: " + username + " was found: " + user);
-//            else
-//                System.out.println("Username: " + username + ", password: " + password +" : NO match found");
         } catch (DaoException e) {
             /// This code is executed when the DAO layer throws an exception.
             /// We might place some logic here to deal with the issue, but in this case,
