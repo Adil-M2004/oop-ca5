@@ -63,4 +63,6 @@ public abstract class MySqlDao
 
 
     public abstract List<Car> JsonString() throws DaoException;
+
+    public abstract String jsonEntity(int id) throws DaoException;
 }

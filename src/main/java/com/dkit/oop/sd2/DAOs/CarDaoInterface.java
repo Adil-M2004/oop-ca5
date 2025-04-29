@@ -41,6 +41,10 @@ public interface CarDaoInterface
 
     public List<Car> Jsonstring() throws DaoException;
 
+    public String jsonEntity(int id) throws DaoException;
+
+    public
+
 
 }
 

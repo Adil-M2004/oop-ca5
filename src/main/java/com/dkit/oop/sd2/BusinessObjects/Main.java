@@ -14,7 +14,7 @@ package com.dkit.oop.sd2.BusinessObjects;
  *
  * Here, we use one DAO per database table.
  *
- * Use the SQL script "CreateUsers.sql" included with this project
+ * Use the SQL script "Ca5MySQL.sql" included with this project
  * to create the required MySQL user_database and User table.
  */
 
@@ -59,7 +59,7 @@ public class Main {
            Main.feature3(3);
 //            menu();
         } else if (option == 4) {
-            Car car = new Car(9,"Ferrari", "458 Italia", 2016, 26000);
+            Car car = new Car("Ferrari", "458 Italia", 2016, 26000);
            Main.feature4(car);
        //     menu();
         } else if (option == 5) {
@@ -78,8 +78,8 @@ public class Main {
 //            menu();
         } else if (option == 8) {
             System.out.println("Enter Car Id:");
-            int carId = keyboard.nextInt();
-            Main.feature8(carId);
+            int Id = keyboard.nextInt();
+            Main.feature8(Id);
 //            menu();
 //        } else if (option == 9) {
 //            System.out.println("Enter Car ID:");
@@ -264,6 +264,27 @@ public class Main {
 
         } catch (DaoException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void feature8(int Id) {
+        CarDaoInterface ICarDao = new MySqlCarDao();
+
+        try{
+            System.out.println("\n CallJsonEntity");
+            String entity = ICarDao.jsonEntity(Id);
+
+            System.out.println(entity);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void feature9(int Id) {
+        CarDaoInterface ICarDao = new MySqlCarDao();
+
+        try {
+
         }
     }
 

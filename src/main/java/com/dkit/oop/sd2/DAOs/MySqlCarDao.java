@@ -342,7 +342,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
         return Jsonstring(); }
 
     @Override
-    public String jsonEntity(int id) throws DaoException {
+    public String jsonEntity(int Id) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -351,23 +351,23 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
         try {
             connection = this.getConnection();
 
-            String query = "SELECT * FROM cars WHERE car_id = ?";
+            String query = "SELECT * FROM cars WHERE car_id = "+Id;
             preparedStatement = connection.prepareStatement(query);
 
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int Id = resultSet.getInt(1);
+                int carId = resultSet.getInt(1);
                 String make = resultSet.getString(2);
                 String model = resultSet.getString(3);
                 int year1 = resultSet.getInt(4);
                 int price = resultSet.getInt(5);
-                Car c = new Car(Id, make, model, year1, price);
+                //Car c = new Car(Id, make, model, year1, price);
 
 
                 JSONObject jsonObject = new JSONObject();
 
                 // Adding key=>value pairs.  Keys must be strings, but values can have various types.
-                jsonObject.put("Car ID", Id);
+                jsonObject.put("Car ID", carId);
                 jsonObject.put("Make", make);
                 jsonObject.put("Model", model);
                 jsonObject.put("Model Year", year1);
@@ -401,8 +401,11 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
         }
         return jsonString;
     }
-    @Override
-    public String jsonEntity() throws DaoException {
-        // Call the Jsonstring() method to maintain compatibility with both interfaces
-        return jsonEntity(); }
-}
+
+//    @Override
+//    public String jsonEntity(int id) throws DaoException {
+//        // Call the Jsonstring() method to maintain compatibility with both interfaces
+//        return jsonEntity(int id); }
+
+
+}//LB TODO/////////////////////
