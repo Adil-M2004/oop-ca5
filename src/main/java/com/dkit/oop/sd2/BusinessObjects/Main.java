@@ -280,12 +280,12 @@ public class Main {
         }
     }
 
-    public static void feature9(int Id) {
-        CarDaoInterface ICarDao = new MySqlCarDao();
-
-        try {
-
-        }
-    }
+//    public static void feature9(int Id) {
+//        CarDaoInterface ICarDao = new MySqlCarDao();
+//
+//        try {
+//
+//        }
+//    }
 
 }//LB

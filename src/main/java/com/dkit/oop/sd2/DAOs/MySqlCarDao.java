@@ -3,6 +3,7 @@ package com.dkit.oop.sd2.DAOs;
 
 import com.dkit.oop.sd2.DTOs.Car;
 import com.dkit.oop.sd2.Exceptions.DaoException;
+import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -319,7 +320,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
     }
 
     @Override
-    public String Jsonstring(int id) throws DaoException {
+    public List<Car> Jsonstring() throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -377,7 +378,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
                 throw new DaoException("findAllUsers() " + e.getMessage());
             }
         }
-        return jsonString;     // may be empty
+        return carsList;     // may be empty
 
     }
 

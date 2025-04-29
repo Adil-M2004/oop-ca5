@@ -43,7 +43,6 @@ public interface CarDaoInterface
 
     public String jsonEntity(int id) throws DaoException;
 
-    public
 
 
 }
