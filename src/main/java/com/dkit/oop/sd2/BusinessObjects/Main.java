@@ -30,7 +30,7 @@ import java.util.Scanner;
 //import org.json.JSONObject;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DaoException {
         Main Main = new Main();
 
         Scanner keyboard = new Scanner(System.in);
@@ -42,26 +42,25 @@ public class Main {
                 "5 – Update an existing Entity by ID\n" +
                 "6 - Get list of entities matching a filter\n" +
                 "7 - Convert List of Entities to a JSON String\n" +
-                "8 -  Convert a single Entity by Key into a JSON String\n" +
-                "9 - Display Entity by Id\n" +
-                "10 - Display all Entities"
+                "8 -  Convert a single Entity by Key into a JSON String\n"
+
         );
         int option = keyboard.nextInt();
 
 
         if (option == 1) {
             Main.feature1();
-           // menu();
+             menu();
         } else if (option == 2) {
             Main.feature2(2);
-           // menu();
+             menu();
         } else if (option == 3) {
-           Main.feature3(3);
-//            menu();
+            Main.feature3(3);
+            menu();
         } else if (option == 4) {
             Car car = new Car("Ferrari", "458 Italia", 2016, 26000);
-           Main.feature4(car);
-       //     menu();
+            Main.feature4(car);
+                 menu();
         } else if (option == 5) {
             //Main.feature5(4, 45000);
             System.out.println("Input ID");
@@ -69,25 +68,19 @@ public class Main {
             System.out.println("Input New Price");
             int price = keyboard.nextInt();
             Main.feature5(id, price);
-//            menu();
+            menu();
         } else if (option == 6) {
             Main.feature6(2020);
            menu();            //MILESTONE 1 END
         } else if (option == 7) { //MILSTONE 2 START
-            Main.feature7();
-//            menu();
+            Main.feature7();menu();
         } else if (option == 8) {
             System.out.println("Enter Car Id:");
             int Id = keyboard.nextInt();
             Main.feature8(Id);
-//            menu();
-//        } else if (option == 9) {
-//            System.out.println("Enter Car ID:");
-//            int carId = keyboard.nextInt();
-//            Main.feature9(carId);
+            menu();
 
-
-        }// MAIN LB
+        }
 
 
     }
@@ -248,7 +241,7 @@ public class Main {
             e.printStackTrace();
         }
     }
-    
+
     public static void feature7() {
         CarDaoInterface ICarDao = new MySqlCarDao();
 
