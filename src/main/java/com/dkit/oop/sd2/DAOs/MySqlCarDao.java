@@ -438,7 +438,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
                 throw new DaoException("findAllUsers() " + e.getMessage());
             }
         }
-        return carsList;     // may be empty
+        return jsonString;     // may be empty
 
     }
 
