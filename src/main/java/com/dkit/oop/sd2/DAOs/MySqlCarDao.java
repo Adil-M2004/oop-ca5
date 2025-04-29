@@ -341,7 +341,21 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
                 String model = resultSet.getString(3);
                 int year1 = resultSet.getInt(4);
                 int price = resultSet.getInt(5);
-               
+
+                //Create the JSON OBJECT
+                JSONObject jsonObject = new JSONObject();
+
+                // Adding key=>value pairs.  Keys must be strings, but values can have various types.
+                jsonObject.put("Car ID", Id);
+                jsonObject.put("Make", make);
+                jsonObject.put("Model", model);
+                jsonObject.put("Model Year", year1);
+                jsonObject.put("Price", price);
+
+                jsonString = jsonObject.toString();
+
+                System.out.println("JSON String is: \n " + jsonString);
+
             }
         } catch (SQLException e) {
             throw new DaoException("findAllCaresultSet() " + e.getMessage());
