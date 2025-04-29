@@ -93,38 +93,56 @@ public class Main {
     }
 
 //    //MENU METHOD
-//    public static void menu() throws DaoException {
-//        Scanner keyboard = new Scanner(System.in);
-//        System.out.println("Input Feature Option (Milstone 1: 1-6)\n" +
-//                "1 – Get all Entities\n" +
-//                "2 - Find and display car by key\n" +
-//                "3 – Delete an Entity by key\n" +
-//                "4 - Insert an Entity\n" +
-//                "5 – Update an existing Entity by ID\n" +
-//                "6 - Get list of entities matching a filter\n" +
-//                "7 - Convert List of Entities to a JSON String\n" +
-//                "8 -  Convert a single Entity by Key into a JSON String\n" +
-//                "9 - Display Entity by Id\n" +
-//                "10 - Display all Entities"
-//        );
-//        int option = keyboard.nextInt();
-//
-//        if (option == 1) {
-//            Main.feature1();
-//        } else if (option == 2) {
-//            Main.feature2(2);
-//        } else if (option == 3) {
-//            Main.feature3(3);
-//        } else if (option == 4) {
-//            Main.feature4("Ferrari", "F8 Spyder", 2020, 315000);
-//        } else if (option == 5) {
-//            Main.feature5(4, 45000);
-//        } else if (option == 6) {
-//            Main.feature6(2020);
-//        } else if (option == 7) {
-//            Main.feature7();
-//        }
-//    }
+    public static void menu() throws DaoException {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Input Feature Option (Milstone 1: 1-6)\n" +
+                "1 – Get all Entities\n" +
+                "2 - Find and display car by key\n" +
+                "3 – Delete an Entity by key\n" +
+                "4 - Insert an Entity\n" +
+                "5 – Update an existing Entity by ID\n" +
+                "6 - Get list of entities matching a filter\n" +
+                "7 - Convert List of Entities to a JSON String\n" +
+                "8 -  Convert a single Entity by Key into a JSON String\n"
+
+        );
+        int option = keyboard.nextInt();
+
+
+        if (option == 1) {
+            Main.feature1();
+            menu();
+        } else if (option == 2) {
+            Main.feature2(2);
+            menu();
+        } else if (option == 3) {
+            Main.feature3(3);
+            menu();
+        } else if (option == 4) {
+            Car car = new Car("Ferrari", "458 Italia", 2016, 26000);
+            Main.feature4(car);
+            menu();
+        } else if (option == 5) {
+            //Main.feature5(4, 45000);
+            System.out.println("Input ID");
+            int id = keyboard.nextInt();
+            System.out.println("Input New Price");
+            int price = keyboard.nextInt();
+            Main.feature5(id, price);
+            menu();
+        } else if (option == 6) {
+            Main.feature6(2020);
+            menu();            //MILESTONE 1 END
+        } else if (option == 7) { //MILSTONE 2 START
+            Main.feature7();menu();
+        } else if (option == 8) {
+            System.out.println("Enter Car Id:");
+            int Id = keyboard.nextInt();
+            Main.feature8(Id);
+            menu();
+
+        }
+    }
 
     //FEATURES (METHODS)
 
