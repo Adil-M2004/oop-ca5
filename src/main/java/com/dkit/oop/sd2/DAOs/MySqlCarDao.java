@@ -323,6 +323,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        List<Car> carsList = new ArrayList<>();
         String jsonString = "";
 
         try {
@@ -341,6 +342,8 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
                 String model = resultSet.getString(3);
                 int year1 = resultSet.getInt(4);
                 int price = resultSet.getInt(5);
+                Car c = new Car(Id, make, model, year1, price);
+                carsList.add(c);
 
                 //Create the JSON OBJECT
                 JSONObject jsonObject = new JSONObject();
@@ -374,7 +377,7 @@ public class MySqlCarDao extends MySqlDao implements CarDaoInterface {
                 throw new DaoException("findAllUsers() " + e.getMessage());
             }
         }
-        return carsList;     // may be empty
+        return jsonString;     // may be empty
 
     }
 
